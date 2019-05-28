@@ -85,6 +85,7 @@ Recommended by [Adafruit NeoPixel "Best Practices"](https://learn.adafruit.com/a
 - [ESP32 Arduino Libraries & Tools](https://github.com/espressif/arduino-esp32)
 - ~~[ESP8266/ESP32 WebServer](https://github.com/bbx10/WebServer_tng)~~ replaced by Async
 - [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
+  - [Async TCP Library for ESP32](https://github.com/me-no-dev/AsyncTCP)  need both for ESP32
 - [OneButton.h](https://github.com/mathertel/OneButton)
 
 
