@@ -38,8 +38,22 @@ Control addressable LEDs with an ESP32 via a web browser over Wi-Fi.
 
 ### Hardware
 - Optional
+    - MSGEQ7 for Audio Support. with a microphone
+      - Good Starter [ESP32_FFT_Audio_LEDs](https://github.com/debsahu/ESP32_FFT_Audio_LEDs)
+      - 
     - Potentiometer
     - push button
+
+### Example circuit. ours uses:
+
+MSGEQ7_AUDIO_PIN 34
+
+MSGEQ7_STROBE_PIN 26
+
+MSGEQ7_RESET_PIN  27
+
+CENTER_LED NUM_LEDS/2
+![hw_wiring](https://raw.githubusercontent.com/debsahu/ESP32_FFT_Audio_LEDs/master/docs/hardware_fft.png)   
 
 #### ESP32 Development Board
 
