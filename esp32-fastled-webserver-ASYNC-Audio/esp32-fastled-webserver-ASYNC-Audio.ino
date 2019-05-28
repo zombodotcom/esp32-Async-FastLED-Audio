@@ -73,10 +73,11 @@ unsigned long paletteTimeout = 0;
 #define DATA_PIN 12 // pins tested so far on the Feather ESP32: 13, 12, 27, 33, 15, 32, 14, SCL
 //#define CLK_PIN   4
 #define LED_TYPE WS2812B
-#define COLOR_ORDER RGB
+#define COLOR_ORDER GRB
 #define NUM_STRIPS 8
 #define NUM_LEDS_PER_STRIP 100
 #define NUM_LEDS NUM_LEDS_PER_STRIP *NUM_STRIPS
+//#define NUM_LEDS 144
 CRGB leds[NUM_LEDS];
 
 #define MILLI_AMPS 4000 // IMPORTANT: set the max milli-Amps of your power supply (4A = 4000mA)
@@ -209,20 +210,21 @@ void setup()
 
 
   // three-wire LEDs (WS2811, WS2812, NeoPixel)
-  //  FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, 32, COLOR_ORDER>(leds, 144).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, 12, COLOR_ORDER>(leds, 28).setCorrection(TypicalLEDStrip);
 
   // four-wire LEDs (APA102, DotStar)
   //FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
 
   // Parallel output: 13, 12, 27, 33, 15, 32, 14, SCL
-  FastLED.addLeds<LED_TYPE, 13, COLOR_ORDER>(leds, 0, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
-  FastLED.addLeds<LED_TYPE, 12, COLOR_ORDER>(leds, NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
-  FastLED.addLeds<LED_TYPE, 27, COLOR_ORDER>(leds, 2 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
-  FastLED.addLeds<LED_TYPE, 33, COLOR_ORDER>(leds, 3 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
-  FastLED.addLeds<LED_TYPE, 15, COLOR_ORDER>(leds, 4 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
-  FastLED.addLeds<LED_TYPE, 32, COLOR_ORDER>(leds, 5 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
-  FastLED.addLeds<LED_TYPE, 14, COLOR_ORDER>(leds, 6 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
-  FastLED.addLeds<LED_TYPE, SCL, COLOR_ORDER>(leds, 7 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
+//  FastLED.addLeds<LED_TYPE, 32, COLOR_ORDER>(leds, 144, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
+//  FastLED.addLeds<LED_TYPE, 12, COLOR_ORDER>(leds, 28, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
+//  FastLED.addLeds<LED_TYPE, 27, COLOR_ORDER>(leds, 2 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
+//  FastLED.addLeds<LED_TYPE, 33, COLOR_ORDER>(leds, 3 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
+//  FastLED.addLeds<LED_TYPE, 15, COLOR_ORDER>(leds, 4 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
+//  FastLED.addLeds<LED_TYPE, 13, COLOR_ORDER>(leds, 5 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
+//  FastLED.addLeds<LED_TYPE, 14, COLOR_ORDER>(leds, 6 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
+//  FastLED.addLeds<LED_TYPE, SCL, COLOR_ORDER>(leds, 7 * NUM_LEDS_PER_STRIP, NUM_LEDS_PER_STRIP).setCorrection(TypicalLEDStrip);
 
   FastLED.setMaxPowerInVoltsAndMilliamps(5, MILLI_AMPS);
 
@@ -235,7 +237,7 @@ void setup()
 
   // -- Create the FastLED show task
 //  xTaskCreatePinnedToCore(FastLEDshowTask, "FastLEDshowTask", 2048, NULL, 2, &FastLEDshowTaskHandle, FASTLED_SHOW_CORE);
- button.attachClick(Click); // change patterns on doubleclick
+// button.attachClick(Click); // change patterns on doubleclick
   autoPlayTimeout = millis() + (autoplayDuration * 1000);
 }
 
@@ -245,7 +247,7 @@ void loop()
 {
   handleWeb();
   audioReader();
-  readvals();
+//  readvals();
   if (power == 0)
   {
     fill_solid(leds, NUM_LEDS, CRGB::Black);
@@ -281,7 +283,7 @@ void loop()
 
   // send the 'leds' array out to the actual LED strip
 //  FastLEDshowESP32();
-   button.tick();
+//   button.tick();
    FastLED.show();
   // insert a delay to keep the framerate modest
   // FastLED.delay(1000 / FRAMES_PER_SECOND);

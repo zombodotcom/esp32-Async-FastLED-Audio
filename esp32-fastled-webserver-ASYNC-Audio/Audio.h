@@ -46,11 +46,12 @@ float spectrumDecay[7] = {0};   // holds time-averaged values
 float spectrumPeaks[7] = {0};   // holds peak values
 float audioAvg = 270.0;
 float gainAGC = 0.0;
-
+uint8_t samplepeak=0;
 uint8_t spectrumByte[7];        // holds 8-bit adjusted adc values
 
 uint8_t spectrumAvg;
 
+uint8_t timeval = 20; 
 unsigned long currentMillis; // store current loop's millis value
 unsigned long audioMillis; // store time of last audio update
 
@@ -107,7 +108,6 @@ void readAudio() {
     // process peak values
     if (spectrumPeaks[i] < spectrumDecay[i]) spectrumPeaks[i] = spectrumDecay[i];
     spectrumPeaks[i] = spectrumPeaks[i] * (1.0 - PEAKDECAY);
-
     spectrumByte[i] = spectrumValue[i] / 4;
   }
 
@@ -165,146 +165,201 @@ void fade_down(uint8_t value) {
   }
 }
 
+//
+//void spectrumWaves()
+//{
+////   audioReader();
+//  fade_down(2);
+//
+//  CRGB color = CRGB(spectrumByte[6], spectrumByte[5] / 8, spectrumByte[1] / 2);
+//  
+//  leds[CENTER_LED] = color;
+//  leds[CENTER_LED].fadeToBlackBy(spectrumByte[3] / 12);
+//
+//  leds[CENTER_LED - 1] = color;
+//  leds[CENTER_LED - 1].fadeToBlackBy(spectrumByte[3] / 12);
+//
+//  //move to the left
+//  for (int i = NUM_LEDS - 1; i > CENTER_LED; i--) {
+//    leds[i] = leds[i - 1];
+//  }
+//  // move to the right
+//  for (int i = 0; i < CENTER_LED; i++) {
+//    leds[i] = leds[i + 1];
+//  }
+//}
+//
+//void spectrumWaves2()
+//{
+//   audioReader();
+//  fade_down(2);
+//
+//  CRGB color = CRGB(spectrumByte[5] / 8, spectrumByte[6], spectrumByte[1] / 2);
+//
+//  leds[CENTER_LED] = color;
+//  leds[CENTER_LED].fadeToBlackBy(spectrumByte[3] / 12);
+//
+//  leds[CENTER_LED - 1] = color;
+//  leds[CENTER_LED - 1].fadeToBlackBy(spectrumByte[3] / 12);
+//
+//  //move to the left
+//  for (int i = NUM_LEDS - 1; i > CENTER_LED; i--) {
+//    leds[i] = leds[i - 1];
+//  }
+//  // move to the right
+//  for (int i = 0; i < CENTER_LED; i++) {
+//    leds[i] = leds[i + 1];
+//  }
+//}
+//
+//void spectrumWaves3()
+//{
+//  // audioReader();
+//  fade_down(2);
+//
+//  CRGB color = CRGB(spectrumByte[1] / 2, spectrumByte[5] / 8, spectrumByte[6]);
+//
+//  leds[CENTER_LED] = color;
+//  leds[CENTER_LED].fadeToBlackBy(spectrumByte[3] / 12);
+//
+//  leds[CENTER_LED - 1] = color;
+//  leds[CENTER_LED - 1].fadeToBlackBy(spectrumByte[3] / 12);
+//
+//  //move to the left
+//  for (int i = NUM_LEDS - 1; i > CENTER_LED; i--) {
+//    leds[i] = leds[i - 1];
+//  }
+//  // move to the right
+//  for (int i = 0; i < CENTER_LED; i++) {
+//    leds[i] = leds[i + 1];
+//  }
+//}
+//
+//void analyzerColumns()
+//{
+//  
+//  fill_solid(leds, NUM_LEDS, CRGB::Black);
+//
+//  const uint8_t columnSize = NUM_LEDS / 7;
+//
+//  for (uint8_t i = 0; i < 7; i++) {
+//    uint8_t columnStart = i * columnSize;
+//    uint8_t columnEnd = columnStart + columnSize;
+//
+//    if (columnEnd >= NUM_LEDS) columnEnd = NUM_LEDS - 1;
+//
+//    uint8_t columnHeight = map8(spectrumByte[i], 1, columnSize);
+//
+//    for (uint8_t j = columnStart; j < columnStart + columnHeight; j++) {
+//      if (j >= NUM_LEDS || j >= columnEnd)
+//        continue;
+//
+//      leds[j] = CHSV(i * 40, 255, 255);
+//    }
+//  }
+//}
+//
+//void analyzerPeakColumns()
+//{
+//  // audioReader();
+//  fill_solid(leds, NUM_LEDS, CRGB::Black);
+//
+//  const uint8_t columnSize = NUM_LEDS / 7;
+//
+//  for (uint8_t i = 0; i < 7; i++) {
+//    uint8_t columnStart = i * columnSize;
+//    uint8_t columnEnd = columnStart + columnSize;
+//
+//    if (columnEnd >= NUM_LEDS) columnEnd = NUM_LEDS - 1;
+//
+//    uint8_t columnHeight = map(spectrumValue[i], 0, 1023, 0, columnSize);
+//    uint8_t peakHeight = map(spectrumPeaks[i], 0, 1023, 0, columnSize);
+//
+//    for (uint8_t j = columnStart; j < columnStart + columnHeight; j++) {
+//      if (j < NUM_LEDS && j <= columnEnd) {
+//        leds[j] = CHSV(i * 40, 255, 128);
+//      }
+//    }
+//
+//    uint8_t k = columnStart + peakHeight;
+//    if (k < NUM_LEDS && k <= columnEnd)
+//      leds[k] = CHSV(i * 40, 255, 255);
+//  }
+//}
+//
+//void beatWaves()
+//{
+//  // audioReader();
+//  fade_down(2);
+//
+//  if (beatDetect()) {
+//    leds[CENTER_LED] = CRGB::Red;
+//  }
+//
+//  //move to the left
+//  for (int i = NUM_LEDS - 1; i > CENTER_LED; i--) {
+//    leds[i] = leds[i - 1];
+//  }
+//  // move to the right
+//  for (int i = 0; i < CENTER_LED; i++) {
+//    leds[i] = leds[i + 1];
+//  }
+//}
 
-void spectrumWaves()
-{
-  // audioReader();
-  fade_down(2);
 
-  CRGB color = CRGB(spectrumByte[6], spectrumByte[5] / 8, spectrumByte[1] / 2);
 
-  leds[CENTER_LED] = color;
-  leds[CENTER_LED].fadeToBlackBy(spectrumByte[3] / 12);
 
-  leds[CENTER_LED - 1] = color;
-  leds[CENTER_LED - 1].fadeToBlackBy(spectrumByte[3] / 12);
+void radiate() {
+  //int SPEED = mono[0] * 0.004;
+  //HALF_POS = beatsin8(40, 30 + SPEED, 80 + SPEED);
+  int MILLISECONDS  = 0;
+  int HALF_POS=NUM_LEDS/2;
+  //lowPass_audio = 0.10;
+  //filter_min    = 100;
 
-  //move to the left
-  for (int i = NUM_LEDS - 1; i > CENTER_LED; i--) {
-    leds[i] = leds[i - 1];
-  }
-  // move to the right
-  for (int i = 0; i < CENTER_LED; i++) {
-    leds[i] = leds[i + 1];
-  }
-}
+  //  EVERY_N_MILLISECONDS(50) {
+  //    hue++;
+  //    if ( hue > 255) hue = 0;
+  //  }
 
-void spectrumWaves2()
-{
-  // audioReader();
-  fade_down(2);
+  leds[HALF_POS] = CRGB(spectrumByte[0], spectrumByte[3], spectrumByte[6]);
+  leds[HALF_POS] = CRGB(spectrumByte[0], spectrumByte[3],spectrumByte[6]);
+  //leds[HALF_POS].fadeToBlackBy(30);
 
-  CRGB color = CRGB(spectrumByte[5] / 8, spectrumByte[6], spectrumByte[1] / 2);
 
-  leds[CENTER_LED] = color;
-  leds[CENTER_LED].fadeToBlackBy(spectrumByte[3] / 12);
-
-  leds[CENTER_LED - 1] = color;
-  leds[CENTER_LED - 1].fadeToBlackBy(spectrumByte[3] / 12);
-
-  //move to the left
-  for (int i = NUM_LEDS - 1; i > CENTER_LED; i--) {
-    leds[i] = leds[i - 1];
-  }
-  // move to the right
-  for (int i = 0; i < CENTER_LED; i++) {
-    leds[i] = leds[i + 1];
-  }
-}
-
-void spectrumWaves3()
-{
-  // audioReader();
-  fade_down(2);
-
-  CRGB color = CRGB(spectrumByte[1] / 2, spectrumByte[5] / 8, spectrumByte[6]);
-
-  leds[CENTER_LED] = color;
-  leds[CENTER_LED].fadeToBlackBy(spectrumByte[3] / 12);
-
-  leds[CENTER_LED - 1] = color;
-  leds[CENTER_LED - 1].fadeToBlackBy(spectrumByte[3] / 12);
-
-  //move to the left
-  for (int i = NUM_LEDS - 1; i > CENTER_LED; i--) {
-    leds[i] = leds[i - 1];
-  }
-  // move to the right
-  for (int i = 0; i < CENTER_LED; i++) {
-    leds[i] = leds[i + 1];
-  }
-}
-
-void analyzerColumns()
-{
-  
-  fill_solid(leds, NUM_LEDS, CRGB::Black);
-
-  const uint8_t columnSize = NUM_LEDS / 7;
-
-  for (uint8_t i = 0; i < 7; i++) {
-    uint8_t columnStart = i * columnSize;
-    uint8_t columnEnd = columnStart + columnSize;
-
-    if (columnEnd >= NUM_LEDS) columnEnd = NUM_LEDS - 1;
-
-    uint8_t columnHeight = map8(spectrumByte[i], 1, columnSize);
-
-    for (uint8_t j = columnStart; j < columnStart + columnHeight; j++) {
-      if (j >= NUM_LEDS || j >= columnEnd)
-        continue;
-
-      leds[j] = CHSV(i * 40, 255, 255);
+  EVERY_N_MILLISECONDS(11) {
+    for (int i = NUM_LEDS - 1; i > HALF_POS + 1; i--) {
+      leds[i].blue = leds[i - 1].blue;
+    }
+    for (int i = 0; i < HALF_POS; i++) {
+      leds[i].blue = leds[i + 1].blue;
     }
   }
-}
-
-void analyzerPeakColumns()
-{
-  // audioReader();
-  fill_solid(leds, NUM_LEDS, CRGB::Black);
-
-  const uint8_t columnSize = NUM_LEDS / 7;
-
-  for (uint8_t i = 0; i < 7; i++) {
-    uint8_t columnStart = i * columnSize;
-    uint8_t columnEnd = columnStart + columnSize;
-
-    if (columnEnd >= NUM_LEDS) columnEnd = NUM_LEDS - 1;
-
-    uint8_t columnHeight = map(spectrumValue[i], 0, 1023, 0, columnSize);
-    uint8_t peakHeight = map(spectrumPeaks[i], 0, 1023, 0, columnSize);
-
-    for (uint8_t j = columnStart; j < columnStart + columnHeight; j++) {
-      if (j < NUM_LEDS && j <= columnEnd) {
-        leds[j] = CHSV(i * 40, 255, 128);
-      }
+  EVERY_N_MILLISECONDS(27) {
+    for (int i = NUM_LEDS - 1; i > HALF_POS + 1; i--) {
+      leds[i].green = leds[i - 1].green;
     }
+    for (int i = 0; i < HALF_POS; i++) {
+      leds[i].green = leds[i + 1].green;
+    }
+  }
+  EVERY_N_MILLISECONDS(52) {
+    for (int i = NUM_LEDS - 1; i > HALF_POS + 1; i--) {
+      leds[i].red = leds[i - 1].red;
+    }
+    for (int i = 0; i < HALF_POS; i++) {
+      leds[i].red = leds[i + 1].red;
+    }
+  }
 
-    uint8_t k = columnStart + peakHeight;
-    if (k < NUM_LEDS && k <= columnEnd)
-      leds[k] = CHSV(i * 40, 255, 255);
+  EVERY_N_MILLISECONDS(2) {
+    //blur1d(leds, NUM_LEDS, 1);
   }
 }
 
-void beatWaves()
-{
-  // audioReader();
-  fade_down(2);
 
-  if (beatDetect()) {
-    leds[CENTER_LED] = CRGB::Red;
-  }
 
-  //move to the left
-  for (int i = NUM_LEDS - 1; i > CENTER_LED; i--) {
-    leds[i] = leds[i - 1];
-  }
-  // move to the right
-  for (int i = 0; i < CENTER_LED; i++) {
-    leds[i] = leds[i + 1];
-  }
-}
+
 
 
 

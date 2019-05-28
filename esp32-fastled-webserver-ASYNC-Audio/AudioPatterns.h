@@ -1,3 +1,4 @@
+
 #define VUFadeFactor 5
 #define VUScaleFactor 2.0
 #define VUPaletteFactor 1.5
@@ -23,7 +24,7 @@
 //    leds[NUM_LEDS - x - 1] = pixelColor;
 //  }
 //}
-
+//
 //void drawVU2() {
 //  uint8_t avg = map8(spectrumAvg, 0, NUM_LEDS - 1);
 //  

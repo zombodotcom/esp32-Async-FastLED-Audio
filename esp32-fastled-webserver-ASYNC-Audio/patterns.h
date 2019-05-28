@@ -24,7 +24,8 @@
 
 #include "palettes.h";
 #include "twinkleFox.h"
-
+#include "AndrewPatterns.h"
+#include "AudioPatterns.h"
 void rainbow()
 {
   // FastLED's built-in rainbow generator
@@ -279,6 +280,25 @@ PatternAndNameList patterns = {
   { juggle, "juggle" },
   { bpm, "bpm" },
   { audioPrinter, "audioPrinter" },
+  {besin,"besin"},
+{fillnoise,"fillnoise"},
+{noisefire,"noisefire"},
+{noisefiretest,"noisefiretest"},
+{jugglep,"jugglep"},
+{ripple,"ripple"},
+{rainbowg,"fillnoise"},
+{rainbowbit,"rainbowbit"},
+{plasma,"plasma"},
+{radiate,"radiate"},
+//{analyzerPeakColumns,"analyzerPeakColumns"},
+//{analyzerColumns,"analyzerColumns"},
+//{spectrumWaves,"spectrumWaves"},
+//{spectrumWaves2,"spectrumWaves2"},
+//{spectrumWaves3,"spectrumWaves3"},
+//{drawVU2,"drawVU2"},
+//{drawVU,"drawVU"},
+
+
 
   { showSolidColor,         "Solid Color" },
 };
