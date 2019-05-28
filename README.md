@@ -6,6 +6,8 @@
 
 Control addressable LEDs with an ESP32 via a web browser over Wi-Fi.
 
+# Working for 7 hours without multicore support
+ - will update on longer hours until problem
 ## Features
 ### Currently Working:
 * [x] DemoReel100 patterns
