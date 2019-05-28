@@ -47,10 +47,10 @@ Control addressable LEDs with an ESP32 via a web browser over Wi-Fi.
 
 ### Example circuit. 
 Ours uses:
-MSGEQ7_AUDIO_PIN 34
-MSGEQ7_STROBE_PIN 26
-MSGEQ7_RESET_PIN  27
-CENTER_LED NUM_LEDS/2
+- MSGEQ7_AUDIO_PIN 34
+- MSGEQ7_STROBE_PIN 26
+- MSGEQ7_RESET_PIN  27
+
 https://github.com/debsahu/ESP32_FFT_Audio_LEDs
 ![hw_wiring](https://raw.githubusercontent.com/debsahu/ESP32_FFT_Audio_LEDs/master/docs/hardware_fft.png)   
 https://github.com/debsahu/ESP32_FFT_Audio_LEDs
