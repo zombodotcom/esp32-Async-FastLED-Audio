@@ -9,6 +9,7 @@ Control addressable LEDs with an ESP32 via a web browser over Wi-Fi.
 ## Features
 ### Currently Working:
 * [x] DemoReel100 patterns
+* [x] MSGEQ7 Integration / Audio
 * [x] Static web app file serving from SPIFFS
 * [x] Ability to adjust these settings via the HTTP REST API:
    * [x] power on/off
