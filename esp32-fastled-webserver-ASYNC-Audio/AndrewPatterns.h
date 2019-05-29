@@ -1,4 +1,9 @@
-
+/* soundmems_demo
+By: Andrew Tuline
+Date: December 2017
+Updated: September 2018
+https://github.com/atuline/FastLED-Demos/tree/master/soundmems_demo
+*/
 // Use qsuba for smooth pixel filtering and qsubd for digital pixel filtering.
 #define qsubd(x, b)  ((x>b)?b:0)                                                // Digital unsigned subtraction macro. if result <0, then => 0. Otherwise, take on fixed value.
 #define qsuba(x, b)  ((x>b)?x-b:0)                                              // Analog Unsigned subtraction macro. if result <0, then => 0. By Andrew Tuline.
