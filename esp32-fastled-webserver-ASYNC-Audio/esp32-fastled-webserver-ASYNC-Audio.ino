@@ -33,7 +33,7 @@
 #if defined(FASTLED_VERSION) && (FASTLED_VERSION < 3001008)
 #warning "Requires FastLED 3.1.8 or later; check github for latest code."
 #endif
-
+#include <ESPmDNS.h>
 AsyncWebServer webServer(80);
 #include "buttsandpot.h"
 const int led = 5;
@@ -74,8 +74,8 @@ unsigned long paletteTimeout = 0;
 //#define CLK_PIN   4
 #define LED_TYPE WS2812B
 #define COLOR_ORDER GRB
-#define NUM_STRIPS 8
-#define NUM_LEDS_PER_STRIP 100
+#define NUM_STRIPS 1
+#define NUM_LEDS_PER_STRIP 144
 #define NUM_LEDS NUM_LEDS_PER_STRIP *NUM_STRIPS
 //#define NUM_LEDS 144
 CRGB leds[NUM_LEDS];
@@ -211,7 +211,7 @@ void setup()
 
   // three-wire LEDs (WS2811, WS2812, NeoPixel)
     FastLED.addLeds<LED_TYPE, 32, COLOR_ORDER>(leds, 144).setCorrection(TypicalLEDStrip);
-    FastLED.addLeds<LED_TYPE, 12, COLOR_ORDER>(leds, 28).setCorrection(TypicalLEDStrip);
+//    FastLED.addLeds<LED_TYPE, 12, COLOR_ORDER>(leds, 28).setCorrection(TypicalLEDStrip);
 
   // four-wire LEDs (APA102, DotStar)
   //FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);

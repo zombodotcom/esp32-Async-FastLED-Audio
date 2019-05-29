@@ -85,15 +85,29 @@ webServer.on("/scan", HTTP_GET, [](AsyncWebServerRequest *request){
 
 
   
-
+  webServer.serveStatic("/", SPIFFS, "/ap/").setFilter(ON_AP_FILTER);
+  webServer.serveStatic("/", SPIFFS, "/","max-age=86400").setFilter(ON_STA_FILTER);;
   webServer.serveStatic("/", SPIFFS, "/", "max-age=86400").setDefaultFile("index.htm");
   webServer.serveStatic("/index.htm", SPIFFS, "/index.htm", "max-age=86400");
+  webServer.serveStatic("/index-ap.htm", SPIFFS, "/ap/index-ap.htm", "max-age=86400");
+//  webServer.rewrite("/", "index.htm");
+//  webServer.rewrite("/index.htm", "index-ap.htm").setFilter(ON_AP_FILTER);
   webServer.serveStatic("/favicon.ico", SPIFFS, "/favicon.ico", "max-age=86400");
   webServer.serveStatic("/css/styles.css", SPIFFS, "/css/styles.css", "max-age=86400");
+   webServer.serveStatic("/css/styles.css", SPIFFS, "/css/styles.css", "max-age=86400");
+   webServer.serveStatic("/css/bootstrapmin.css", SPIFFS, "/css/bootstrapmin.css", "max-age=86400");
+   webServer.serveStatic("/css/jquery.minicolors.min.css", SPIFFS, "/css/jquery.minicolors.min.css", "max-age=86400");
   webServer.serveStatic("/js/app.js", SPIFFS, "/js/app.js", "max-age=86400");
   webServer.serveStatic("/images/atom196.png", SPIFFS, "/images/atom196.png", "max-age=86400");
 
   webServer.begin();
+    if (!MDNS.begin("esp32")) {
+        Serial.println("Error setting up MDNS responder!");
+        while(1) {
+            delay(1000);
+        }
+    }
+    Serial.println("mDNS responder started");
   Serial.println ( "HTTP server started" );
 }
 

@@ -98,7 +98,7 @@ void fillnoise() {                                                             /
   waveit();                                                                     // Move the pixels to the left/right, but not too fast.
   
   fadeToBlackBy(leds+NUM_LEDS/2-1, 2, 128);                                     // Fade the center, while waveit moves everything out to the edges.
-     Serial.println(spectrumAvg);                                                                          
+ Serial.println(spectrumAvg);                                                                          
 } // fillnoise()
 
 void noisefire() {                                                              // Create fire based on noise and spectrumAvg. 

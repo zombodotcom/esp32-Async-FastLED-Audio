@@ -292,11 +292,12 @@ PatternAndNameList patterns = {
 {radiate,"radiate"},
 //{analyzerPeakColumns,"analyzerPeakColumns"},
 //{analyzerColumns,"analyzerColumns"},
-//{spectrumWaves,"spectrumWaves"},
+{spectrumWaves,"spectrumWaves"},
 //{spectrumWaves2,"spectrumWaves2"},
 //{spectrumWaves3,"spectrumWaves3"},
-//{drawVU2,"drawVU2"},
-//{drawVU,"drawVU"},
+{spectrumPaletteWaves,"spectrumPaletteWaves"},
+{drawVU2,"drawVU2"},
+{drawVU,"drawVU"},
 
 
 

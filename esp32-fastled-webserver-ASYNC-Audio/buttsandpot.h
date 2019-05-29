@@ -1,3 +1,21 @@
+/*
+Button and Potentiometer reader. shows constraints
+to do this you need to figure out what values your pots min and max are
+replace them in the map area, my pot was
+1023 on 3.3v
+4095 on 5v5v
+
+#######
+haven't tried digital pin yet! 
+
+button uses the OneButton library:
+pretty nifty button library. 
+https://github.com/mathertel/OneButton
+can download from arduino
+
+*/
+
+
 #define MAX_BRIGHTNESS 255      // Thats full on, watch the power!
 #define MIN_BRIGHTNESS 0       // set to a minimum of 25%
 
