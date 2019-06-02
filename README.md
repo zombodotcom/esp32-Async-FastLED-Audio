@@ -33,7 +33,7 @@ Control addressable LEDs with an ESP32 via a web browser over Wi-Fi.
 * [ ] WebSockets for automatically refreshing/syncing web clients
 * [ ] Bluetooth Port
 * [ ] Bluetooth and Wifi Port
-* [ ] AP Mode with Station mode website loading
+* [ ] AP Mode with Station mode default routing website loading ( index.htm on AP/STA mode)
 * [ ] [Sam's multi-core support](https://github.com/samguyer/FastLED/blob/master/examples/DemoReelESP32/DemoReelESP32.ino)
     * [ ] Freezing Stopped/ Core dumps. 
     * commenting it out removes these issues.
