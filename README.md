@@ -1,4 +1,4 @@
-# ESP32 FastLED Async Web Server with Audio
+# ESP32 FastLED Async Web Server with Audio, AP and STA mode at the same time!
 **Work in progress ESP32 port of:**
  - https://github.com/jasoncoon/esp32-fastled-webserver
  - https://github.com/jasoncoon/esp8266-fastled-audio
