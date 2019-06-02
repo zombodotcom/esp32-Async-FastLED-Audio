@@ -25,7 +25,8 @@ Control addressable LEDs with an ESP32 via a web browser over Wi-Fi.
    * [x] twinkle speed/density
    * [x] fire cooling/sparking
 * [x] Setting storage in EEPROM
-* [x] AP Mode with Station mode
+* [x] AP Mode with Station mode 
+*   for now on AP mode, you need to go to 192.168.1.1/index-ap.htm to load the offline javascript files.
 ### Currently Lacking:
 * [ ] More Audio Patterns
 * [ ] Fixed Audio Patterns
